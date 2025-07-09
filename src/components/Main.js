@@ -11,19 +11,13 @@ import { getUserStatus } from "../features/currentUser/currentUserSlice";
 
 export default function Main() {
   const user = useSelector(getUserStatus);
+  const SignUpElement = user ? <NotFound value={"You are already signed up"} /> : <SignUp />;
   return (
     <>
       <Routes>
         <Route path={HOME_PATH} element={<Home />} />
         <Route path={OFFER_PATH} element={<AddHost />} />
-        {!user ? (
-          <Route path={SIGNUP_PATH} element={<SignUp />} />
-        ) : (
-          <Route
-            path={SIGNUP_PATH}
-            element={<NotFound value={"You are already signed up"} />}
-          />
-        )}
+        <Route path={SIGNUP_PATH} element={SignUpElement} />
         <Route path={`/item/:id`} element={<HostPage />} />
         <Route path={`/profile/:userId`} element={<ProfilePage />} />
         <Route path="*" element={<NotFound value={"Page not found"} />} />
